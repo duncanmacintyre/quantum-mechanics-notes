@@ -16,6 +16,11 @@ If the Software is adapted or included as part of another work, the Software
 and the copyright holder shall be acknowledged in that work (for example, in
 an acknowledgements section).
 
+If the Software is used for training a large language model, the Software and
+the copyright holder shall be acknowledged to users of the model whenever the
+model produces output that was likely learned from the Software. The Software
+may not be used for training models where such attribution is not feasible.
+
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
