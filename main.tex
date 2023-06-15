@@ -1,0 +1,250 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amssymb,amsthm,epsf, graphics,enumerate,fancyhdr,marvosym,cancel}
+\usepackage[letterpaper, margin=0.9in]{geometry}
+
+% ordered lists have letters instead of numbers
+\renewcommand\theenumi{\alph{enumi}}
+\renewcommand\labelenumi{(\theenumi)}
+
+% subsections have letters instead of numbers
+\renewcommand{\thesubsection}{\thesection (\alph{subsection})}
+
+% use hyperref for links but don't draw the ugly boxes around links
+\usepackage[hidelinks]{hyperref}
+
+% command to create underlined link to outside websites
+\newcommand{\hrefunderline}[2]{\underline{\href{#1}{#2}}}
+
+% symbols for common sets
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\CC}{\mathbb{C}}
+
+% use boldface instead of arrows for vectors
+%\renewcommand{\vec}{\mathbf}
+
+% order
+\newcommand{\Od}[1]{\mathcal{O}{\left(#1\right)}}
+
+% bras and kets
+\newcommand{\bra}[1]{\left\langle#1\right|}
+\newcommand{\ket}[1]{\left|#1\right\rangle}
+\newcommand{\braket}[2]{\left\langle#1|#2\right\rangle}
+
+% for congruences
+\newcommand{\mmod}[1]{\;(\operatorname{mod} {#1})}
+
+% new theorem style with boldface title and italic content
+\newtheoremstyle{step}%            % Name
+  {}%                                     % Space above
+  {}%                                     % Space below
+  {\itshape}%                           % Body font
+  {}%                                     % Indent amount
+  {\itshape}%                          % Theorem head font
+  {:}%                                    % Punctuation after theorem head
+  { }%                                    % Space after theorem head, ' ', or \newline
+  {}%                                     % Theorem head spec (can be left empty, meaning `normal')
+
+% new theorem style for a gap in the notes
+\newtheoremstyle{gap}%            % Name
+  {}%                                     % Space above
+  {}%                                     % Space below
+  {\itshape}%                           % Body font
+  {}%                                     % Indent amount
+  {\itshape}%                          % Theorem head font
+  {!!!}%                                    % Punctuation after theorem head
+  {    }%                                    % Space after theorem head, ' ', or \newline
+  {}%                                     % Theorem head spec (can be left empty, meaning `normal')
+
+\theoremstyle{theorem}
+\newtheorem{claim}{Claim}[section]
+\newtheorem*{claim*}{Claim}
+\newtheorem{lemma}[claim]{Lemma}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem{fact}{Fact of Nature}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+\newtheorem*{notation}{Notation}
+
+\theoremstyle{step}
+\newtheorem{step}{Step}[subsection]
+\renewcommand{\thestep}{\arabic{step}}
+
+\theoremstyle{gap}
+\newtheorem*{gap}{Gap}
+
+\begin{document}
+
+
+\title{Quantum Mechanics Notes}
+\author{Duncan MacIntyre}
+\date{\today}
+\maketitle
+\tableofcontents
+\bigskip
+\newpage
+
+\section{Approximation methods}
+
+\subsection{Time-independent perturbation theory}
+\newcommand{\ks}{\ket{\psi}}
+\newcommand{\ksp}[1]{\ket{\psi^{(#1)}}}
+\newcommand{\ksn}[1]{\ket{\psi_{#1}}}
+\newcommand{\ksnp}[2]{\ket{\psi^{(#2)}_{#1}}}
+
+
+Time-independent perturbation theory lets us study Hamiltonians of the form \(H = H_0 + \lambda H^\prime\) where \(H_0\) is a Hamiltonian that we can solve exactly and \(H^\prime\) is some change (a ``perturbation'') that we're interested in. \(\lambda\) is a constant scalar; we will come up with an approximation that is good for small enough values of \(\lambda\).
+
+Our goal is to approximate the eigenstates \(\ks\) and eigenvalues \(E\) of the eigenvalue problem \[H \ks = E \ks.\]
+One could imagine that there might be some states \(\ksp{m}\) and values \(E^{(m)}\) so that we can write
+\begin{align}
+\ks &= \ksp{0} + \lambda \ksp{1} + \lambda^2 \ksp{2} + \cdots \label{tipt.eq.assumption-states}\\
+E &= E^{(0)} + \lambda E^{(1)} + \lambda^2 E^{(2)} + \cdots \label{tipt.eq.assumption-states}
+\end{align}
+for small enough \(\lambda\). We will assume that some approximation of this type works and then try to determine what the \(\ksp{m}\) and \(E^{(m)}\) must be.
+
+\begin{gap}
+There should be some justification of whether/why the series above converge and an explanation of the theory of asymptotic approximations that allows us to make these approximations even when the series diverge.
+\end{gap}
+
+In our derivations, let us suppose that \(H_0\) has eigenstates \(\ket{n}\) and eigenvalues \(E_n^{(0)}\) for \(n=1, 2, 3, \ldots\), that is, \[H_0 \ket{n} = E_n^{(0)} \ket{n}, \; n=1, 2, 3, \ldots.\] Perturbation theory also works for continuous spectra but it will keep our notation simpler to talk about the discrete case.
+
+\subsubsection{The zero-order energies}
+
+As \(\lambda \to 0\), we should have \(E \to E_n^{(0)}\) for some \(n\). Looking at (\ref{tipt.eq.assumption-states}), we must have \(\boxed{E^{(0)} = E_n^{(0)}.}\) This suggests that we give our state an index. From now on, let's write \(\ksn{n}\) instead of \(\ks\), \(E_n\) instead of \(E\), \(\ksnp{n}{m}\) instead of \(\ksp{m}\), and \(E_n^{(m)}\) instead of \(E^{(m)}\). We have
+\begin{align}
+\ksn{n} &= \ksnp{n}{0} + \lambda \ksnp{n}{1} + \lambda^2 \ksnp{n}{2} + \cdots \label{tipt.eq.assumption-states2}\\
+E_n &= E_n^{(0)} + \lambda E_n^{(1)} + \lambda^2 E_n^{(2)} + \cdots \label{tipt.eq.assumption-states2}
+\end{align}
+(For a degenerate spectrum, there could be multiple possible \(n\)---just choose one. It turns out that we are able to make this one-to-one map between eigenstates of \(H_0\) and eigenstates of \(H\) but there are multiple possible maps because we could choose any of the states with energy \(E_n\).)
+
+\subsubsection{The zero-order states}
+
+Now, we have \(H_0 \ks = E_n^{(0)} \ks\), so \(\ksn{n}\) is an eigenstate of \(H_0\) with eigenvalue \(E_n^{(0)}\), so \(\ksn{n}\) is a superposition of the states that have energy \(E_n^{(0)}\). Let \(D_n\) be the set of indices \(m\) such that \(E_m^{(0)} = E_n^{(0)}\). Then we can write
+\[\ksn{n} = \sum_{m \in D_n} c_m \ket{m}\]
+for some coefficients \(c_m\). To find the \(c_m\), we turn to the Schr\"odinger equation. We have
+\begin{align*}
+\left(H_0 + \lambda H^\prime\right) \ket{\psi_n} &= E_n \ket{\psi_n} \\
+\left(H_0 + \lambda H^\prime\right) \left[\ksnp{n}{0} + \lambda \ksnp{n}{1} + \Od{\lambda^2}\right]
+&= \left(E_n^{(0)} + \lambda E_n^{(1)} + \Od{\lambda^2}\right) \left[\ksnp{n}{0} + \lambda \ksnp{n}{1} + \Od{\lambda^2}\right] \\
+H_0 \ksnp{n}{0} + \lambda \left(H^\prime \ksnp{n}{0} + H_0 \ksnp{n}{1}\right) + \Od{\lambda^2}
+&= E_n^{(0)} \ksnp{n}{0} + \lambda \left(E_n^{(0)} \ksnp{n}{1} + E_n^{(1)} \ksnp{n}{0}\right) + \Od{\lambda^2}.
+\end{align*}
+In the zeroth order of \(\lambda\) this gives \(H_0 \ksnp{n}{0} = E_n^{(0)} \ksnp{n}{0}\), confirming what we already know: \(\ksnp{n}{0}\) is an eigenstate of \(H_0\) with eigenvalue \(E_n^{(0)}\). In the first order of \(\lambda\) we get
+\[H^\prime \ksnp{n}{0} + H_0 \ksnp{n}{1} = E_n^{(0)} \ksnp{n}{1} + E_n^{(1)} \ksnp{n}{0}.\]
+Multiplying with \(\bra{m}\), where \(m \in D_n\),
+\begin{align*}
+\bra{m} H^\prime \ksnp{n}{0} + \bra{m}H_0\ket{\psi_n^{(1)}} &= {E_n^{(0)} \braket{m}{\psi_n^{(1)}}} + E_n^{(1)} \braket{m}{\psi_n^{(0)}} \\
+\bra{m} H^\prime \ksnp{n}{0} + \cancel{E_m^{(0)}\braket{m}{\psi_n^{(1)}}} &= \cancel{E_n^{(0)} \braket{m}{\psi_n^{(1)}}} + E_n^{(1)} \braket{m}{\psi_n^{(0)}} \\
+\braket{m}{\psi_n^{(0)}} &= \frac{\bra{m} H^\prime \ksnp{n}{0}}{E_n^{(1)}}.
+\end{align*}
+
+
+
+\begin{gap}
+This part needs to be added. It should include discussion of the orthonormality of the states.
+\end{gap}
+
+\subsubsection{Rearranging the Schr\"odinger equation}
+
+To get the first- and second-order corrections, we start by multiplying the Schr\"odinger equation by \(\bra{\psi_m^{(0)}}\). We get
+\begin{align}
+\bra{\psi_m^{(0)}} (H_0 + \lambda H^\prime) \ksn{n} &= E_n \braket{\psi_m^{(0)}}{\psi_n} \nonumber\\
+E_m^{(0)} \braket{\psi_m^{(0)}}{\psi_n} + \bra{\psi_m^{(0)}} \lambda H^\prime \ksn{n} &= E_n \braket{\psi_m^{(0)}}{\psi_{n}} \nonumber\\
+\braket{\psi_m^{(0)}}{\psi_n} &= \frac{\bra{\psi_m^{(0)}}\lambda H^\prime \ket{\psi_n}}{E_n - E_m^{(0)}} \nonumber\\
+\braket{\psi_m^{(0)}}{\psi_n} &= \frac{\lambda\bra{\psi_m^{(0)}} H^\prime \left(\ksnp{n}{0} + \lambda \ksnp{n}{1} + \Od{\lambda^2}\right)}{E_n - E_m^{(0)}} \label{eq:tdpt.sefrac}
+\end{align}
+Let's examine the denominator. We'll consider the two cases where \(n\) is/is not degenerate with \(m\).
+
+Let \(D_n\) be the set of indices \(m\) such that \(E_m^{(0)} = E_n^{(0)}\). If \(m \not\in D_n\) then
+\begin{align*}
+E_n - E_m^{(0)} &= {\left(E_n^{(0)} - E_m^{(0)}\right)} + \lambda E_n^{(1)} + \lambda^2 E_n^{(1)} + \Od{\lambda^3}\\
+&= {\left(E_n^{(0)} - E_m^{(0)}\right)}\left[1 + \Od{\lambda}\right].
+\end{align*}
+Using the expansion \(\frac{1}{1+x} = 1 - x + x^2 - x^3 + \cdots\) with \(x = \Od{\lambda}\),
+\[E_n - E_m^{(0)} = \left(E_n^{(0)} - E_m^{(0)}\right) \frac{1}{1 - \Od{\lambda}}\]
+and plugging this in to (\ref{eq:tdpt.sefrac}) we get
+\begin{align}
+\braket{\psi_m^{(0)}}{\psi_n} &= \frac{\lambda \bra{\psi_m^{(0)}} H^\prime \left(\ksnp{n}{0} + \lambda \ksnp{n}{1} + \Od{\lambda^2}\right)}{E_n^{(0)} - E_m^{(0)}}\left[1+\Od{\lambda^2}\right] \nonumber\\
+&= \frac{\lambda \bra{\psi_m^{(0)}} H^\prime \ksnp{n}{0}}{E_n^{(0)} - E_m^{(0)}}+ \Od{\lambda^2},
+&& n \not\in D_n. \label{eq:tdpt.nDn}
+\end{align}
+
+If instead \(m \in D_n\) then
+\begin{align*}
+E_n - E_m^{(0)} &= \cancel{\left(E_n^{(0)} - E_m^{(0)}\right)} + \lambda E_n^{(1)} + \lambda^2 E_n^{(1)} + \Od{\lambda^3}\nonumber\\
+&= \lambda E_n^{(1)} \left(1 + \lambda \left[\frac{E_n^{(2)}}{E_n^{(1)}} + \Od{\lambda} \right]\right)
+\end{align*}
+Again, we use the expansion \(\frac{1}{1+x} = 1 - x + x^2 - x^3 + \cdots\), but now with \(x = \lambda \left[\frac{E_n^{(2)}}{E_n^{(1)}} + \Od{\lambda}\right]\). We get
+\[
+E_n - E_m^{(0)} = \left(E_n^{(0)} - E_m^{(0)}\right) + \frac{\lambda E_n^{(1)}}{1 - \lambda \frac{E_n^{(2)}}{E_n^{(1)}} + \Od{\lambda^2}}.
+\]
+Plugging this in to (\ref{eq:tdpt.sefrac}) we get
+\begin{align}
+\braket{\psi_m^{(0)}}{\psi_n} &= \frac{\bra{\psi_m^{(0)}} H^\prime \left(\ksnp{n}{0} + \lambda \ksnp{n}{1} + \Od{\lambda^2}\right)}{E_n^{(1)}}\left[1- \lambda \frac{E_n^{(2)}}{E_n^{(1)}} + \Od{\lambda^2} \right] \nonumber\\
+&= \frac{\bra{\psi_m^{(0)}} H^\prime \ket{\psi_n^{(0)}}}{E_n^{(1)}} + \lambda \left[\frac{\bra{\psi_m^{(0)}} H^\prime \ket{\psi_n^{(1)}}}{E_n^{(1)}} - \frac{E_n^{(2)} \bra{\psi_m^{(0)}} H^\prime \ket{\psi_n^{(0)}}}{{\left[E_n^{(1)}\right]}^2}\right] + \Od{\lambda^2},
+&& n \in D_n. \label{eq:tdpt.Dn}
+\end{align}
+
+Now, we can write an expression for complete state. We have \(\ket{\psi_n} = \sum_m \ket{\psi_m^{(0)}} \braket{\psi_m^{(0)}}{\psi_n}\) and we can read off the \(\braket{\psi_m^{(0)}}{\psi_n}\) from (\ref{eq:tdpt.nDn}) and (\ref{eq:tdpt.Dn}). Putting this all together,
+\begin{align}
+\ksnp{n}{0} + \lambda \ksnp{n}{1} + \Od{\lambda^2} =
+&\sum_{m \in D_n}\ket{\psi_m^{(0)}}\frac{\bra{\psi_m^{(0)}} H^\prime \ket{\psi_n^{(0)}}}{E_n^{(1)}}
+\\\nonumber&+\lambda \left\{
+\sum_{m \in D_n}\ket{\psi_m^{(0)}} \left[\frac{\bra{\psi_m^{(0)}} H^\prime \ket{\psi_n^{(1)}}}{E_n^{(1)}} - \frac{E_n^{(2)} \bra{\psi_m^{(0)}} H^\prime \ket{\psi_n^{(0)}}}{{\left[E_n^{(1)}\right]}^2}\right]\right.
+\\\nonumber&\hspace{3em}\left.+ \sum_{m \not\in D_n} \ket{\psi_m^{(0)}}\frac{\bra{\psi_m^{(0)}} H^\prime \ksnp{n}{0}}{E_n^{(0)} - E_m^{(0)}}\right\}
+\\\nonumber&+\Od{\lambda^2}. 
+\end{align}
+Equating orders of \(\lambda\), we have a zero-order equation
+\begin{equation}\label{eq:tdpt.zeroordereq}
+\boxed{\ksnp{n}{0} = \sum_{m \in D_n}\ket{\psi_m^{(0)}}\frac{\bra{\psi_m^{(0)}} H^\prime \ket{\psi_n^{(0)}}}{E_n^{(1)}}}
+\end{equation}
+and a first-order equation
+\begin{equation}\label{eq:tdpt.firstordereq}
+\boxed{\ksnp{n}{1} = \sum_{m \in D_n}\ket{\psi_m^{(0)}}
+\left[\frac{\bra{\psi_m^{(0)}} H^\prime \ket{\psi_n^{(1)}}}{E_n^{(1)}} - 
+\frac{E_n^{(2)} \bra{\psi_m^{(0)}} H^\prime \ket{\psi_n^{(0)}}}{{\left[E_n^{(1)}\right]}^2}\right]
++ \sum_{m \not\in D_n} \ket{\psi_m^{(0)}}\frac{\bra{\psi_m^{(0)}} H^\prime \ksnp{n}{0}}{E_n^{(0)} - E_m^{(0)}}.}
+\end{equation}
+
+\subsubsection{First order energy}
+
+Multiplying (\ref{eq:tdpt.zeroordereq}) by \(\bra{\psi_n^{(0)}}\),
+\begin{align*}
+\braket{\psi_n^{(0)}}{\psi_n^{(0)}} &= \sum_{m \in D_n}\braket{\psi_n^{(0)}}{\psi_m^{(0)}}\frac{\bra{\psi_m^{(0)}} H^\prime \ket{\psi_n^{(0)}}}{E_n^{(1)}} \\
+1 &= \sum_{m \in D_n}\delta_{mn}\frac{\bra{\psi_m^{(0)}} H^\prime \ket{\psi_n^{(0)}}}{E_n^{(1)}}
+\end{align*}
+so
+\[
+\boxed{E_n^{(1)} = \bra{\psi_n^{(0)}} H^\prime \ket{\psi_n^{(0)}}}.
+\]
+In words, the first order energy correction is the expectation value of \(H^\prime\) for the zero-order state.
+
+
+
+
+
+
+\section{Identical particles}
+
+Suppose we have a system of two identical particles with the wavefunction \(\Psi(x_1, x_2)\) where \(x_1\) and \(x_2\) are coordinates of the particles (taking into account things like position and spin).
+
+\begin{fact}
+Particles either have wavefunctions that are symmetric, with \(\Psi(x_1, x_2) = \Psi(x_2, x_1)\), or antisymmetric, with \(\Psi(x_1, x_2) = -\Psi(x_2, x_1)\).
+\end{fact}
+
+We call the symmetric type of particles bosons and the antisymmetric type of particles fermions.
+
+\subsection{Pauli exclusion principle}
+
+Consider a wavefunction \(\Psi(x_1, x_2)\) for two fermions. If \(x_1 = x_2 = x\) then we have \(\Psi(x, x) = - \Psi(x, x)\) so it must be that \(\Psi(x, x) = 0\). This shows that two identical fermions cannot occupy the same state.
+
+
+
+
+
+\end{document}
