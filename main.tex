@@ -277,9 +277,9 @@ This sets up the interaction picture. We have rephrased our problem so that we c
 
 We now integrate both sides of our expression.
 \begin{align}
-\int_{t_0}^t \frac{\partial}{\partial t^\prime} \ket{\Psi_I, t^\prime} &= \frac{i}{\hbar} \int_{t_0}^t \op{H}_I(t^\prime)\ket{\Psi_I, t^\prime} \,dt^\prime \nonumber\\
-\ket{\Psi_I, t} - \ket{\Psi_I, t_0} &= \frac{i}{\hbar} \int_{t_0}^t \op{H}_I(t^\prime)\ket{\Psi_I, t^\prime} \,dt^\prime \nonumber\\
-\ket{\Psi_I, t} &= \ket{\Psi_I, t_0} + \frac{i}{\hbar} \int_{t_0}^t \op{H}_I(t^\prime)\ket{\Psi_I, t^\prime} \,dt^\prime \label{eq.intse}
+\int_{t_0}^t \frac{\partial}{\partial t^\prime} \ket{\Psi_I, t^\prime} &= -\frac{i}{\hbar} \int_{t_0}^t \op{H}_I(t^\prime)\ket{\Psi_I, t^\prime} \,dt^\prime \nonumber\\
+\ket{\Psi_I, t} - \ket{\Psi_I, t_0} &= -\frac{i}{\hbar} \int_{t_0}^t \op{H}_I(t^\prime)\ket{\Psi_I, t^\prime} \,dt^\prime \nonumber\\
+\ket{\Psi_I, t} &= \ket{\Psi_I, t_0} - \frac{i}{\hbar} \int_{t_0}^t \op{H}_I(t^\prime)\ket{\Psi_I, t^\prime} \,dt^\prime \label{eq.intse}
 \end{align}
 This is called the integral form of the Schr\"odinger equation.
 
@@ -287,11 +287,11 @@ We can now iteratively calculate perturbative approximations where we assume \(\
 \[\ket{\Psi_I, t} = \ket{\Psi_I, t_0} + \Od{\op{H}_I(t)}.\]
 Plugging this in for the state inside the integral in (\ref{eq.intse}), we get the first order approximation
 \begin{equation}\label{eq.firsttdpe}
-\ket{\Psi_I, t} = \ket{\Psi_I, t_0} + \frac{i}{\hbar} \int_{t_0}^t \op{H}_I(t^\prime)\ket{\Psi_I, t_0} \,dt^\prime + \Od{\op{H}_I(t)^2}.
+\ket{\Psi_I, t} = \ket{\Psi_I, t_0} - \frac{i}{\hbar} \int_{t_0}^t \op{H}_I(t^\prime)\ket{\Psi_I, t_0} \,dt^\prime + \Od{\op{H}_I(t)^2}.
 \end{equation}
 We can plug in again to get the second order approximation
 \[
-\ket{\Psi_I, t} = \ket{\Psi_I, t_0} + \frac{i}{\hbar} \int_{t_0}^t \op{H}_I(t^\prime)\left[\ket{\Psi_I, t_0} + \frac{i}{\hbar} \int_{t_0}^t \op{H}_I(t^{\prime\prime})\ket{\Psi_I, t_0} \,dt^{\prime\prime}\right] \,dt^\prime + \Od{\op{H}_I(t)^3}.
+\ket{\Psi_I, t} = \ket{\Psi_I, t_0} - \frac{i}{\hbar} \int_{t_0}^t \op{H}_I(t^\prime)\left[\ket{\Psi_I, t_0} - \frac{i}{\hbar} \int_{t_0}^t \op{H}_I(t^{\prime\prime})\ket{\Psi_I, t_0} \,dt^{\prime\prime}\right] \,dt^\prime + \Od{\op{H}_I(t)^3}.
 \]
 In general, we can keep going to achieve higher order approximations. For us, however, the first order approximation (\ref{eq.firsttdpe}) is enough.
 
@@ -313,12 +313,12 @@ V(x_1 - x_2) = \int_{-\infty}^{\infty} \frac{d^3 p}{(2 \pi)^3} \widetilde{V}(p) 
 
 We now consider (\ref{eq.firsttdpe}) and take the limits \(t_0 \to -\infty\) and \(t \to \infty\) because, in scattering, we measure states long before and long after the scattering occurs. Then, dropping the higher-order terms,
 \[
-\ket{\Psi_I, \infty} = \ket{\Psi_I, -\infty} + \frac{i}{\hbar} \int_{-\infty}^\infty \op{H}_I(t)\ket{\Psi_I, -\infty} \,dt.
+\ket{\Psi_I, \infty} = \ket{\Psi_I, -\infty} - \frac{i}{\hbar} \int_{-\infty}^\infty \op{H}_I(t)\ket{\Psi_I, -\infty} \,dt.
 \]
 Take the initial state to be \(\ket{\Psi_I, -\infty} = \ket{k_1, k_2}\). Multiplying by the bra \(\bra{k_1^\prime, k_2^\prime}\),
 \begin{align}
-\braket{k_1^\prime, k_2^\prime}{\Psi_I, \infty} &= \braket{k_1^\prime, k_2^\prime}{k_1, k_2} + \frac{i}{\hbar} \int_{-\infty}^\infty \bra{k_1^\prime, k_2^\prime} \op{H}_I(t)\ket{k_1, k_2} \,dt \nonumber\\
-&= \delta^3(k_1^\prime - k_1)\delta^3(k_2^\prime - k_2) + \frac{i}{\hbar} \int_{-\infty}^\infty \bra{k_1^\prime, k_2^\prime} \op{H}_I(t)\ket{k_1, k_2} \,dt. \label{eq.intermed}
+\braket{k_1^\prime, k_2^\prime}{\Psi_I, \infty} &= \braket{k_1^\prime, k_2^\prime}{k_1, k_2} - \frac{i}{\hbar} \int_{-\infty}^\infty \bra{k_1^\prime, k_2^\prime} \op{H}_I(t)\ket{k_1, k_2} \,dt \nonumber\\
+&= \delta^3(k_1^\prime - k_1)\delta^3(k_2^\prime - k_2) - \frac{i}{\hbar} \int_{-\infty}^\infty \bra{k_1^\prime, k_2^\prime} \op{H}_I(t)\ket{k_1, k_2} \,dt. \label{eq.intermed}
 \end{align}
 This motivates us to compute the matrix element
 \[
@@ -342,12 +342,31 @@ and plugging in (\ref{eq.ftV}),
 \end{align*}
 Putting this in to (\ref{eq.intermed}) we get
 \begin{align}
-\braket{k_1^\prime, k_2^\prime}{\Psi_I, \infty} =&\;\; \delta^3(k_1^\prime - k_1)\delta^3(k_2^\prime - k_2) + \frac{i}{\hbar} \int_{-\infty}^\infty dt\;e^{\frac{i\left(t-t_0\right)\left({k_1^\prime}^2 + {k_2^\prime}^2 - {k_1}^2 - {k_2}^2\right)}{2m\hbar}} \widetilde{V}(k_1^\prime-k_1) \;\delta^3(k_1^\prime-k_1-k_2^\prime+k_2) \nonumber\\
-=& \;\;\delta^3(k_1^\prime - k_1)\;\delta^3(k_2^\prime - k_2) \nonumber\\&\;\;\;\;+ {i}\, \widetilde{V}(k_1^\prime-k_1) \;\delta^3(k_1^\prime-k_1-k_2^\prime+k_2) \;\delta\left(\frac{1}{{2m}}\left({k_1^\prime}^2 + {k_2^\prime}^2 - {k_1}^2 - {k_2}^2\right)\right).
+\braket{k_1^\prime, k_2^\prime}{\Psi_I, \infty} =&\;\; \delta^3(k_1^\prime - k_1)\delta^3(k_2^\prime - k_2) - \frac{i}{\hbar} \int_{-\infty}^\infty dt\;e^{\frac{i\left(t-t_0\right)\left({k_1^\prime}^2 + {k_2^\prime}^2 - {k_1}^2 - {k_2}^2\right)}{2m\hbar}} \widetilde{V}(k_1^\prime-k_1) \;\delta^3(k_1^\prime-k_1-k_2^\prime+k_2) \nonumber\\
+=& \;\;\delta^3(k_1^\prime - k_1)\;\delta^3(k_2^\prime - k_2) \nonumber\\&\;\;\;\;- {i}\, \widetilde{V}(k_1^\prime-k_1) \;\delta^3(k_1^\prime-k_1-k_2^\prime+k_2) \;\delta\left(\frac{1}{{2m}}\left({k_1^\prime}^2 + {k_2^\prime}^2 - {k_1}^2 - {k_2}^2\right)\right).
 \end{align}
 Interestingly, we see that the delta functions cause energy and momentum to be conserved.
 
+{\bf Mixed states and the density operator.} We now consider the same problem but where we allow for mixed states. We will need to describe the system by the density operator \(\op{\rho}(t)\). First, let us derive the time evolution of \(\op{\rho}(t)\) in first order perturbation theory.
 
+Suppose at time \(t_0\) we have a statistical ensemble of interaction-picture states \(\ket{{\psi_I}_n, t_0}\) each with probability \(P_n\). Then
+\[\op{\rho}(t_0) = \sum_n P_n \ket{{\psi_I}_n, t_0}\bra{{\psi_I}_n, t_0}.\]
+At time \(t\) states will have evolved according to (\ref{eq.firsttdpe}), so
+\[\op{\rho}(t) = \sum_n P_n \ket{{\psi_I}_n, t}\bra{{\psi_I}_n, t}\]
+where
+\begin{align*}
+\ket{{\Psi_I}_n, t} &= \ket{{\Psi_I}_n, t_0} - \frac{i}{\hbar} \int_{t_0}^t \op{H}_I(t^\prime)\ket{{\Psi_I}_n, t_0} \,dt^\prime + \Od{\op{H}_I(t)^2} \\
+\bra{{\Psi_I}_n, t} &= \bra{{\Psi_I}_n, t_0} + \frac{i}{\hbar} \int_{t_0}^t \bra{{\Psi_I}_n, t_0} \op{H}_I(t^\prime) \,dt^\prime + \Od{\op{H}_I(t)^2} \\
+\ket{{\Psi_I}_n, t}\bra{{\Psi_I}_n, t} &= \ket{{\Psi_I}_n, t_0}\bra{{\Psi_I}_n, t_0} - \frac{i}{\hbar} \int_{t_0}^t \left(\op{H}_I(t^\prime) \ket{{\Psi_I}_n, t_0}\bra{{\Psi_I}_n, t_0}  - \ket{{\Psi_I}_n, t_0}\bra{{\Psi_I}_n, t_0} \op{H}_I(t^\prime)\right) \,dt^\prime + \Od{\op{H}_I(t)^2} \\
+\ket{{\Psi_I}_n, t}\bra{{\Psi_I}_n, t} &= \ket{{\Psi_I}_n, t_0}\bra{{\Psi_I}_n, t_0} - \frac{i}{\hbar} \int_{t_0}^t \left[\op{H}_I(t^\prime),\; \ket{{\Psi_I}_n, t_0}\bra{{\Psi_I}_n, t_0}\right] \,dt^\prime + \Od{\op{H}_I(t)^2}
+\end{align*}
+so
+\begin{equation}\label{eq.rhotev}
+\op{\rho}(t) = \op{\rho}\left(t_0\right) -  \frac{i}{\hbar} \int_{t_0}^t \left[\op{H}_I(t^\prime),\; \op{\rho}\left(t_0\right)\right] \,dt^\prime + \Od{\op{H}_I(t)^2}.
+\end{equation}
+
+As before, we drop the higher order terms and take \(t \to \infty\) and \(t_0 \to -\infty\). Then the momentum basis amplitude is
+\[\bra{{k_1}^\prime, {k_2}^\prime} \op{\rho}(t) \ket{{k_1}, {k_2}}\]
 
 
 
